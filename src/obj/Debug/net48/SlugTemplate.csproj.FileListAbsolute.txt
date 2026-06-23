@@ -1,0 +1,17 @@
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\SlugTemplate.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\SlugTemplate.pdb
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\Assembly-CSharp-firstpass.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\BepInEx.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\HOOKS-Assembly-CSharp.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\PUBLIC-Assembly-CSharp.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\SlugBase.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\Unity.Mathematics.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\bin\Debug\net48\BepInEx.xml
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.csproj.AssemblyReference.cache
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.AssemblyInfoInputs.cache
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.AssemblyInfo.cs
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.csproj.CoreCompileInputs.cache
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemp.A1EF8458.Up2Date
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.dll
+C:\Users\AyariaPrescott\source\repos\AyariaPrescott\UOT-VD\src\obj\Debug\net48\SlugTemplate.pdb

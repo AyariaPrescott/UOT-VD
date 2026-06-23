@@ -1,0 +1,31 @@
+[h1][b]Загадочная учёная из далёких земель, наделённая необычной способностью управлять жемчугом![/b][/h1]
+
+[h3]Жемчужная кошка имеет особые взаимодействия со следующими модами:[/h3]
+[b][list]
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3388224007]Rain Meadow[/url] - полная поддержка многопользовательской игры!
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2944727862]Improved Input Config[/url] - поддержка всех уникальных сочетаний клавиш Pearlcat.
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3232063592]Chasing Wind[/url] - уникальные взаимодействия и диалоги.
+[/list][/b]
+[h3][u]Для Жемчужной кошки не требуется дополнение More Slugcats (DLC), однако настоятельно рекомендуется его приобрести.[/u][/h3]
+
+[h3]СОЗДАТЕЛИ:[/h3]
+[b][list]
+    [*]Geahgeah - Иллюстрации, Дизайн
+    [*]Sidera - SFX, Диалоги
+    [*]Noir - Гибкие уши, Шарф
+    [*]Linnnnnna - Китайский перевод
+    [*]zbiotr - Испанский перевод
+    [*]_Wolf_ - Русский перевод
+    [*]Kimi - Доп иллюстрации
+[/list][/b]
+[h3]ТЕСТЕРЫ:[/h3]
+[b][list]
+    [*] TurtleMan27
+    [*] Balagaga
+    [*] Elliot
+    [*] Efi
+    [*] WillowWisp
+    [*] Lolight2
+    [*] mayhemmm
+[/list][/b]
+[h3]Прямая Загрузка: https://github.com/forthfora/pearlcat/releases[/h3]

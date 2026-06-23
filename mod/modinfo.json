@@ -1,0 +1,9 @@
+{
+	"id": "AyariaPrescott.UOT",
+	"name": "Slugcat Template",
+	"version": "0.1.0",
+	"authors": "AyariaPrescott",
+	"description": "A template for making SlugBase mods.",
+	"requirements": [ "slime-cubed.slugbase" ],
+	"requirements_names": [ "SlugBase" ]
+}

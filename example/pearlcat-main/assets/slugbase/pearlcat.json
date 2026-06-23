@@ -1,0 +1,81 @@
+{
+    "id": "Pearlcat",
+    "name": "Pearlcat",
+    "description": "A scholar of obscure origin, armed with an enigmatic energy and a thirst for knowledge.<LINE>Physically frail, but with pearls as your ally - what will you discover on your travels?",
+    "features": {
+        "expedition_description": "Their curiosity insatiable, Pearlcat ventures out once more in<LINE>pursuit of expanding their collection",
+
+        "world_state": ["Pearlcat", "Red", "White"],
+        "timeline_after": "Red",
+        
+        "start_room": ["T1_START", "SS_S04"],
+        
+        "food_min": 6,
+        "food_max": 9,
+        
+        "throw_skill": [0, 0],
+        
+        "weight": [0.95, 0.9],
+        "lung_capacity": [1.0, 1.0],
+        "walk_speed": [1.0, 0.875],
+        "climb_speed": [1.0, 0.8],
+        "tunnel_speed": [1.0, 0.86],
+        "crouch_stealth": [0.2, 0.7],
+        "loudness": [1.5, 0.5],
+        
+        "karma": 3,
+        "karma_cap": 4,
+        
+        "the_mark": true,
+        "the_glow": true,
+
+        "has_dreams": true,
+        "use_default_dreams": false,
+
+        "back_spear": false,
+        
+        "auto_grab_batflies": false,
+        "perma_unlock_gates": false,
+        
+        "diet": {
+            "base": "White",
+            "corpses": 1.0,
+            "meat": 1.0,
+            "plants": 1.0,
+            "overrides": {
+                "SlugNPC": 0.0
+            }
+        },
+        
+        "color": "283b2c",
+        "custom_colors": [
+            {
+                "name": "Body",
+                "story": "283b2c"
+            },
+            {
+                "name": "Eyes",
+                "story": "ffffff"
+            },
+            {
+                "name": "Accent",
+                "story": "ffffff"
+            },
+            {
+                "name": "Cloak",
+                "story": "ca471b",
+                "arena": [ "ffffff", "edab03", "cd557a", "315ab1" ]
+            }
+        ],
+        
+        "title_card": "pearlcat_titlecard",
+
+        "select_menu_scene": "Slugcat_Pearlcat",
+        "select_menu_scene_ascended": "Slugcat_Pearlcat_Ascended",
+
+        "sleep_scene": "Slugcat_Pearlcat_Sleep",
+
+        "intro_slideshow": "Pearlcat_Intro",
+        "outro_slideshow": "Pearlcat_Outro"
+    }
+}

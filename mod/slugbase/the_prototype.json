@@ -1,0 +1,25 @@
+{
+	"id": "AyariaPrescott.UOT",
+	"name": "The Prototype",
+	"description": "A recolored copy of The Survivor that demonstrates some custom SlugBase features.<LINE>This is a template mod for SlugBase.",
+	"features": {
+		"color": "9cf0a4",
+		"AyariaPrescott.UOT/super_jump": 0.5,
+		"AyariaPrescott.UOT/explode_on_death": true,
+		"AyariaPrescott.UOT/mean_lizards": 0.8,
+		"AyariaPrescott.UOT/rgb_neuron": true,
+
+		"select_menu_scene": "Slugcat_AyariaPrescott.UOT",
+		"select_menu_scene_ascended": "Ghost_AyariaPrescott.UOT",
+
+		"diet": {
+			"base": "White",
+			"corpses": 1.0,
+			"meat": 1.0,
+			"plants": 1.0,
+			"overrides": {
+				"SlugNPC": 0.0
+			}
+		}
+	}
+}

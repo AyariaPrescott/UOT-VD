@@ -1,0 +1,14 @@
+{
+  "id": "Slugcat_Pearlcat_Statistics_Sick",
+  "scene_folder": "slugbase/scenes/slugcat_pearlcat_statistics_sick",
+  "images": [
+    {"name": "flat", "pos": [0, 0], "depth": -1.0, "flatmode": true},
+    
+    {"name": "3", "pos": [300, -50], "depth": 6.0, "shader": "Normal"},
+    {"name": "pearlcat", "pos": [300, -80], "depth": 3.0, "shader": "Basic"},
+    {"name": "2", "pos": [300, -100], "depth": 2.5, "shader": "Normal"},
+    {"name": "1", "pos": [700, 110], "depth": 2.0, "shader": "Normal"}
+  ],
+  
+  "idle_depths": [3.0]
+}

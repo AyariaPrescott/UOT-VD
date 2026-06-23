@@ -1,0 +1,30 @@
+[h1][b]¡Una erudita enigmática de una tierra lejana, dotada de la extraordinaria habilidad de emplear perlas![/b][/h1]
+
+[h3]Perlina tiene interacciones especiales con los siguientes mods:[/h3]
+[b][list]
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3388224007]Rain Meadow[/url] - ¡soporte completo para el modo multijugador en línea!
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2944727862]Improved Input Config[/url] - soporte para todos los botones personalizados de Perlina.
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3232063592]Chasing Wind[/url] - interacciones y diálogos únicos.
+[/list][/b]
+[h3][u]Este mod NO requiere de More Slugcats (DLC). Sin embargo, es altamente recomendable.[/u][/h3]
+
+[h3]CRÉDITOS:[/h3]
+[b][list]
+    [*]Geahgeah - Arte y diseño
+    [*]Sidera - Diálogos y efectos de sonido
+    [*]Noir - Código de la bufanda y las orejas
+    [*]Linnnnnna - Traducción al chino
+    [*]zbiotr - Traducción al español
+    [*]Kimi - Trabajo artístico adicional
+[/list][/b]
+[h3]PLAYTESTERS:[/h3]
+[b][list]
+    [*] TurtleMan27
+    [*] Balagaga
+    [*] Elliot
+    [*] Efi
+    [*] WillowWisp
+    [*] Lolight2
+    [*] mayhemmm
+[/list][/b]
+[h3]Descarga directa: https://github.com/forthfora/pearlcat/releases[/h3]
