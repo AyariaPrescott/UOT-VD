@@ -136,10 +136,20 @@ namespace SlugTemplate
         /// <summary>时间倒流冷却帧数</summary>
         public int TimeReverseCooldownTimer { get; set; }
         public const int TIME_REVERSE_COOLDOWN = 120;  // 冷却3秒
-        /// <summary>位置历史最大记录帧数（约10秒 @ 40fps）</summary>
-        public const int MAX_POSITION_HISTORY = 400;
+        /// <summary>位置历史最大记录帧数（约30秒 @ 40fps）</summary>
+        public const int MAX_POSITION_HISTORY = 1200;
         /// <summary>时间倒流每帧回退的帧数（1=实时倒流，越大越快）</summary>
         public const int REVERSE_SPEED = 1;
+
+        // ---- 二段跳（NeuronThreeTwo 被动能力，每个蓝色神经元提供一次额外跳跃） ----
+        /// <summary>剩余可用的二段跳次数（落地或抓杆后重置为AliveThreeTwoCount）</summary>
+        public int DoubleJumpRemaining { get; set; }
+        /// <summary>二段跳刚被触发（用于上升沿检测，防止连续触发）</summary>
+        public bool DoubleJumpTriggered { get; set; }
+        /// <summary>S键是否被按下（时间停止触发器）</summary>
+        public bool SPressed { get; set; }
+        /// <summary>上一帧S键是否被按下</summary>
+        public bool SWasPressed { get; set; }
 
         // ---- 持久化 ----
         public void LoadFromSave(Player player)

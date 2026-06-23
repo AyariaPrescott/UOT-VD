@@ -32,7 +32,7 @@ namespace SlugTemplate
             public float Life;
         }
         private ParticleState[] _particleStates;
-        private const int PARTICLE_COUNT = 8;
+        private const int PARTICLE_COUNT = 20;
 
         public TimeReverseEffect(Player player)
         {

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SlugTemplate")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44085c277e55b3842142a1bf26a65f6719250308")]
 [assembly: System.Reflection.AssemblyProductAttribute("SlugTemplate")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SlugTemplate")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

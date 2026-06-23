@@ -36,10 +36,14 @@ namespace SlugTemplate
             // 检测A键（时间倒流触发器，NeuronThreeTwo能力）
             mod.AKeyHeld = GetKey(KeyCode.A);
 
-            // 检测跳跃+拾取同时按下（时间停止触发器）
-            // 使用 self.input[0].jmp 和 self.input[0].pckp（Rain World原生输入）
-            mod.JumpPickPressed = input.jmp && input.pckp && !mod.WasJumpPickPressed;
-            mod.WasJumpPickPressed = input.jmp && input.pckp;
+            // 检测跳跃+拾取同时按下（二段跳触发器，上升沿检测）
+            bool jumpPickNow = input.jmp && input.pckp;
+            mod.JumpPickPressed = jumpPickNow && !mod.WasJumpPickPressed;  // 上升沿
+            mod.WasJumpPickPressed = jumpPickNow;  // 保存当前帧状态供下帧比较
+
+            // 检测S键（时间停止触发器）
+            mod.SPressed = GetKey(KeyCode.S);
+            // 注意：上升沿在Player_Update中用 SPressed && !SWasPressed 检测
         }
 
         // 反射调用 Input.GetKey（避免直接引用 UnityEngine.InputLegacyModule）
@@ -415,6 +419,117 @@ namespace SlugTemplate
                 stats.bodyWeightFac = 0.85f;
             }
 
+            // ---- 多段跳（NeuronThreeTwo 被动能力，每个蓝色神经元提供一次额外跳跃） ----
+            if (mod.HasNeuronThreeTwo)
+            {
+                // 重置条件（落地、站立、抓取等，参考pearlcat animWhichResetsCooldown）
+                bool shouldReset = self.canJump > 0  // 可以正常跳跃 = 在地面上
+                    || self.standing
+                    || self.bodyMode == Player.BodyModeIndex.Crawl
+                    || self.bodyMode == Player.BodyModeIndex.CorridorClimb
+                    || self.bodyMode == Player.BodyModeIndex.ClimbIntoShortCut
+                    || self.bodyMode == Player.BodyModeIndex.WallClimb
+                    || self.bodyMode == Player.BodyModeIndex.ClimbingOnBeam
+                    || self.bodyMode == Player.BodyModeIndex.Swimming
+                    || self.animation == Player.AnimationIndex.HangFromBeam
+                    || self.animation == Player.AnimationIndex.ClimbOnBeam
+                    || self.animation == Player.AnimationIndex.AntlerClimb
+                    || self.animation == Player.AnimationIndex.VineGrab
+                    || self.animation == Player.AnimationIndex.ZeroGPoleGrab;
+
+                if (shouldReset)
+                {
+                    // 重置为当前蓝色神经元数量（每个NeuronThreeTwo提供一次额外跳跃）
+                    mod.DoubleJumpRemaining = mod.AliveThreeTwoCount;
+                    mod.DoubleJumpTriggered = false;
+                }
+
+                // 检测二段跳输入：使用 JumpPickPressed 上升沿（在checkInput中已计算好）
+                // 多段跳可用条件
+                bool canDoubleJump = mod.DoubleJumpRemaining > 0
+                    && self.Consious
+                    && self.bodyMode != Player.BodyModeIndex.Crawl
+                    && self.bodyMode != Player.BodyModeIndex.CorridorClimb
+                    && self.bodyMode != Player.BodyModeIndex.ClimbIntoShortCut
+                    && self.bodyMode != Player.BodyModeIndex.WallClimb
+                    && self.bodyMode != Player.BodyModeIndex.Swimming
+                    && self.animation != Player.AnimationIndex.HangFromBeam
+                    && self.animation != Player.AnimationIndex.ClimbOnBeam
+                    && self.animation != Player.AnimationIndex.AntlerClimb
+                    && self.animation != Player.AnimationIndex.VineGrab
+                    && self.animation != Player.AnimationIndex.ZeroGPoleGrab
+                    && self.onBack is null
+                    && !self.standing;  // 不在地面上
+
+                if (mod.JumpPickPressed && canDoubleJump)
+                {
+                    mod.DoubleJumpRemaining--;
+                    mod.DoubleJumpTriggered = true;
+
+                    // 短暂阻止抓取（参考pearlcat self.noGrabCounter = 5）
+                    self.noGrabCounter = 5;
+
+                    // 速度逻辑（参考pearlcat Agility速度计算）
+                    if (self.bodyMode == Player.BodyModeIndex.ZeroG || (self.room?.gravity ?? 1f) == 0f || self.gravity == 0f)
+                    {
+                        // 零重力环境
+                        float inputX = self.input[0].x;
+                        float inputY = self.input[0].y;
+                        self.bodyChunks[0].vel.x = 9f * inputX;
+                        self.bodyChunks[0].vel.y = 9f * inputY;
+                        self.bodyChunks[1].vel.x = 8f * inputX;
+                        self.bodyChunks[1].vel.y = 8f * inputY;
+                    }
+                    else
+                    {
+                        // 正常重力环境
+                        if (self.input[0].x != 0)
+                        {
+                            self.bodyChunks[0].vel.y = Mathf.Min(self.bodyChunks[0].vel.y, 0f) + 8f;
+                            self.bodyChunks[1].vel.y = Mathf.Min(self.bodyChunks[1].vel.y, 0f) + 7f;
+                            self.jumpBoost = 6f;
+                        }
+
+                        if (self.input[0].x == 0 || self.input[0].y == 1)
+                        {
+                            self.bodyChunks[0].vel.y = 16f;
+                            self.bodyChunks[1].vel.y = 15f;
+                            self.jumpBoost = 8f;
+                        }
+
+                        if (self.input[0].y == 1)
+                        {
+                            self.bodyChunks[0].vel.x = 10f * self.input[0].x;
+                            self.bodyChunks[1].vel.x = 8f * self.input[0].x;
+                        }
+                        else
+                        {
+                            self.bodyChunks[0].vel.x = 15f * self.input[0].x;
+                            self.bodyChunks[1].vel.x = 13f * self.input[0].x;
+                        }
+
+                        self.animation = Player.AnimationIndex.Flip;
+                        self.bodyMode = Player.BodyModeIndex.Default;
+                    }
+
+                    // 视觉效果（参考pearlcat 爆炸光 + 粒子）
+                    self.room?.PlaySound(SoundID.Fire_Spear_Explode, self.firstChunk.pos, 0.2f, 0.8f);
+                    self.room?.AddObject(new Explosion.ExplosionLight(self.firstChunk.pos, 160f, 1f, 3, new Color(0.2f, 0.4f, 1f)));
+
+                    // 蓝色粒子爆发
+                    for (int j = 0; j < 10; j++)
+                    {
+                        var randVec = Custom.RNV();
+                        self.room?.AddObject(new Spark(
+                            self.firstChunk.pos + randVec * UnityEngine.Random.value * 40f,
+                            randVec * Mathf.Lerp(4f, 30f, UnityEngine.Random.value),
+                            new Color(0.2f, 0.4f, 1f), null, 4, 18));
+                    }
+
+                    Plugin.Logger.LogInfo($"[UOT-VD] Double jump triggered! Remaining={mod.DoubleJumpRemaining}/{mod.AliveThreeTwoCount}");
+                }
+            }
+
             // 时间停止倒计时
             if (mod.TimeStopTimer > 0)
             {
@@ -437,8 +552,8 @@ namespace SlugTemplate
                 mod.TimeStopCooldownTimer--;
             }
 
-            // 跳跃+拾取同时按下 → 时间停止（需NeuronThreeOne）
-            if (mod.JumpPickPressed && mod.HasNeuronThreeOne && mod.TimeStopCooldownTimer <= 0 && mod.TimeStopTimer <= 0)
+            // S键按下 → 时间停止（需NeuronThreeOne）
+            if (mod.SPressed && !mod.SWasPressed && mod.HasNeuronThreeOne && mod.TimeStopCooldownTimer <= 0 && mod.TimeStopTimer <= 0)
             {
                 // 消耗一颗NeuronThreeOne
                 var threeOne = mod.ThreeOnes[mod.ThreeOnes.Count - 1];
@@ -588,8 +703,9 @@ namespace SlugTemplate
                 mod.CtrlKeyHoldTimer = 0;
             }
 
-            // 更新上帧C键状态（参考pearlcat WasSentryInput = sentryInput）
+            // 更新上帧C键和S键状态（参考pearlcat WasSentryInput = sentryInput）
             mod.CWasPressed = mod.CPressed;
+            mod.SWasPressed = mod.SPressed;
         }
 
         private static Type _dataPearlType;

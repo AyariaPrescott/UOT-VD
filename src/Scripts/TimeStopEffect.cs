@@ -16,10 +16,22 @@ namespace SlugTemplate
         private FSprite _glowSprite;      // 中心光晕
         private FSprite _vignetteSprite;  // 屏幕暗角
         private FSprite _clockSprite;     // 时钟指针
+        private FSprite[] _particles;     // 悬浮粒子
         private float _timer;
         private float _phase;
         private bool _destroyed;
         private float _remainingRatio;    // 剩余时间比例
+
+        // 粒子状态
+        private struct ParticleState
+        {
+            public float Angle;
+            public float Radius;
+            public float Speed;
+            public float Life;
+        }
+        private ParticleState[] _particleStates;
+        private const int PARTICLE_COUNT = 16;
 
         public TimeStopEffect(Player player)
         {
@@ -30,6 +42,19 @@ namespace SlugTemplate
             _phase = UnityEngine.Random.value * Mathf.PI * 2f;
             _destroyed = false;
             _remainingRatio = 1f;
+
+            // 初始化粒子状态
+            _particleStates = new ParticleState[PARTICLE_COUNT];
+            for (int i = 0; i < PARTICLE_COUNT; i++)
+            {
+                _particleStates[i] = new ParticleState
+                {
+                    Angle = UnityEngine.Random.value * Mathf.PI * 2f,
+                    Radius = 20f + UnityEngine.Random.value * 60f,
+                    Speed = 0.2f + UnityEngine.Random.value * 0.6f,
+                    Life = UnityEngine.Random.value
+                };
+            }
         }
 
         public void SetRemaining(float ratio)
@@ -46,6 +71,14 @@ namespace SlugTemplate
             if (_glowSprite != null) { _glowSprite.RemoveFromContainer(); _glowSprite = null; }
             if (_vignetteSprite != null) { _vignetteSprite.RemoveFromContainer(); _vignetteSprite = null; }
             if (_clockSprite != null) { _clockSprite.RemoveFromContainer(); _clockSprite = null; }
+            if (_particles != null)
+            {
+                foreach (var p in _particles)
+                {
+                    if (p != null) p.RemoveFromContainer();
+                }
+                _particles = null;
+            }
 
             base.Destroy();
         }
@@ -68,6 +101,22 @@ namespace SlugTemplate
             _timer += 0.02f;
             _phase += 0.025f;
 
+            // 更新粒子 — 顺时针缓慢旋转（时间冻结感）
+            for (int i = 0; i < PARTICLE_COUNT; i++)
+            {
+                _particleStates[i].Angle += _particleStates[i].Speed * 0.015f; // 顺时针
+                _particleStates[i].Radius += Mathf.Sin(_timer * 1.5f + _particleStates[i].Life * Mathf.PI * 2f) * 0.15f;
+                if (_particleStates[i].Radius > 80f)
+                {
+                    _particleStates[i].Radius = 20f + UnityEngine.Random.value * 30f;
+                    _particleStates[i].Angle = UnityEngine.Random.value * Mathf.PI * 2f;
+                }
+                if (_particleStates[i].Radius < 10f)
+                {
+                    _particleStates[i].Radius = 40f + UnityEngine.Random.value * 40f;
+                }
+            }
+
             // 如果时间停止结束，销毁特效
             if (!NeuronModule.GlobalTimeStopActive)
             {
@@ -77,7 +126,7 @@ namespace SlugTemplate
 
         public void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
         {
-            sLeaser.sprites = new FSprite[4];
+            sLeaser.sprites = new FSprite[4 + PARTICLE_COUNT];
 
             // 屏幕暗角 — 覆盖全屏
             _vignetteSprite = new FSprite("Futile_White", true);
@@ -111,6 +160,19 @@ namespace SlugTemplate
             _clockSprite.alpha = 0.7f;
             _clockSprite.color = new Color(0.2f, 1f, 0.3f);
             sLeaser.sprites[3] = _clockSprite;
+
+            // 悬浮粒子
+            _particles = new FSprite[PARTICLE_COUNT];
+            for (int i = 0; i < PARTICLE_COUNT; i++)
+            {
+                var p = new FSprite("pixel", true);
+                p.scaleX = 2.5f;
+                p.scaleY = 2.5f;
+                p.alpha = 0.5f;
+                p.color = new Color(0.2f, 0.9f, 0.3f);
+                _particles[i] = p;
+                sLeaser.sprites[4 + i] = p;
+            }
 
             AddToContainer(sLeaser, rCam, null);
         }
@@ -163,6 +225,20 @@ namespace SlugTemplate
             _clockSprite.color = _remainingRatio < 0.3f
                 ? Color.Lerp(new Color(1f, 0.3f, 0.1f), new Color(0.2f, 1f, 0.3f), Mathf.Sin(_timer * 8f) * 0.5f + 0.5f)
                 : new Color(0.2f, 1f, 0.3f);
+
+            // 悬浮粒子 — 缓慢顺时针旋转，时间冻结感
+            for (int i = 0; i < PARTICLE_COUNT; i++)
+            {
+                var state = _particleStates[i];
+                float px = drawPos.x + Mathf.Cos(state.Angle) * state.Radius;
+                float py = drawPos.y + Mathf.Sin(state.Angle) * state.Radius;
+                _particles[i].SetPosition(px, py);
+                _particles[i].rotation = state.Angle * Mathf.Rad2Deg;
+                _particles[i].alpha = 0.25f + 0.25f * (1f - state.Radius / 80f);
+                _particles[i].scaleX = 1.5f + 2f * (1f - state.Radius / 80f);
+                _particles[i].scaleY = 1.5f + 2f * (1f - state.Radius / 80f);
+                _particles[i].color = new Color(0.15f, 0.85f, 0.25f, 0.4f + 0.3f * (1f - state.Radius / 80f));
+            }
 
             // 确保 sprites 在正确容器中
             for (int i = 0; i < sLeaser.sprites.Length; i++)
