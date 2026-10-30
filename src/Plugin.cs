@@ -1,44 +1,120 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using BepInEx;
-using BepInEx.Logging;
-using SlugBase.Features;
-using static SlugBase.Features.FeatureTypes;
+using UnityEngine;
 
-namespace SlugTemplate
+namespace UniverseVoyager
 {
-    [BepInPlugin(MOD_ID, "UOT-VD", "0.1.0")]
-    public class Plugin : BaseUnityPlugin
+    [BepInPlugin(ModId, DisplayName, Version)]
+    [BepInDependency("slime-cubed.slugbase")]
+    public sealed class Plugin : BaseUnityPlugin
     {
-        public const string MOD_ID = "AyariaPrescott.UOT";
+        public const string ModId = "ayaria.universevoyager";
+        public const string DisplayName = "寰宇观游//虚拟神明";
+        public const string Version = "0.2.0";
+        public const string CharacterId = "Ayaria_UniverseVoyager";
 
-        public static readonly PlayerFeature<float> SuperJump = PlayerFloat("AyariaPrescott.UOT/super_jump");
-        public static readonly PlayerFeature<bool> ExplodeOnDeath = PlayerBool("AyariaPrescott.UOT/explode_on_death");
-        public static readonly GameFeature<float> MeanLizards = GameFloat("AyariaPrescott.UOT/mean_lizards");
-        public static readonly PlayerFeature<bool> RGB_Neuron = PlayerBool("AyariaPrescott.UOT/rgb_neuron");
+        private readonly ConditionalWeakTable<RoomCamera.SpriteLeaser, RenderState> states =
+            new ConditionalWeakTable<RoomCamera.SpriteLeaser, RenderState>();
+        private readonly List<WeakReference> leases = new List<WeakReference>();
+        private readonly ConditionalWeakTable<PlayerGraphics, NeuronMotion> motions =
+            new ConditionalWeakTable<PlayerGraphics, NeuronMotion>();
+        private bool hooked;
 
-        public new static ManualLogSource Logger { get; private set; } = null!;
-
-        public void OnEnable()
+        private void OnEnable()
         {
-            Logger = base.Logger;
-            On.RainWorld.OnModsInit += RainWorld_OnModsInit;
+            if (hooked) return;
+            On.PlayerGraphics.InitiateSprites += InitiateSprites;
+            On.PlayerGraphics.DrawSprites += DrawSprites;
+            On.PlayerGraphics.AddToContainer += AddToContainer;
+            hooked = true;
         }
 
-        private void RainWorld_OnModsInit(On.RainWorld.orig_OnModsInit orig, RainWorld self)
+        private void OnDisable()
         {
-            try
+            if (!hooked) return;
+            On.PlayerGraphics.InitiateSprites -= InitiateSprites;
+            On.PlayerGraphics.DrawSprites -= DrawSprites;
+            On.PlayerGraphics.AddToContainer -= AddToContainer;
+            foreach (WeakReference reference in leases)
             {
-                Hooks.ApplyHooks();
-                Logger.LogInfo("[UOT-VD] Hooks applied successfully");
+                RoomCamera.SpriteLeaser leaser = reference.Target as RoomCamera.SpriteLeaser;
+                RenderState state;
+                if (leaser == null || !states.TryGetValue(leaser, out state)) continue;
+                state.RemoveEffects(leaser);
+                states.Remove(leaser);
             }
-            catch (Exception e)
+            leases.Clear();
+            hooked = false;
+        }
+
+        private static bool IsCharacter(PlayerGraphics graphics)
+        {
+            Player player = graphics.owner as Player;
+            return player != null && player.SlugCatClass != null &&
+                player.SlugCatClass.value == CharacterId;
+        }
+
+        private void InitiateSprites(On.PlayerGraphics.orig_InitiateSprites orig,
+            PlayerGraphics self, RoomCamera.SpriteLeaser leaser, RoomCamera camera)
+        {
+            RenderState previous;
+            if (states.TryGetValue(leaser, out previous))
             {
-                Logger.LogError($"[UOT-VD] Failed to apply hooks: {e}");
+                previous.RemoveEffects(leaser);
+                states.Remove(leaser);
             }
-            finally
+            orig(self, leaser, camera);
+            if (!IsCharacter(self)) return;
+
+            RenderState state = new RenderState(leaser, motions.GetValue(self, CreateMotion));
+            states.Add(leaser, state);
+            leases.RemoveAll(delegate(WeakReference reference)
             {
-                orig(self);
+                return !reference.IsAlive || ReferenceEquals(reference.Target, leaser);
+            });
+            leases.Add(new WeakReference(leaser));
+            state.Attach(leaser, camera, null);
+        }
+
+        private static NeuronMotion CreateMotion(PlayerGraphics graphics)
+        {
+            return new NeuronMotion();
+        }
+
+        private void AddToContainer(On.PlayerGraphics.orig_AddToContainer orig,
+            PlayerGraphics self, RoomCamera.SpriteLeaser leaser,
+            RoomCamera camera, FContainer container)
+        {
+            orig(self, leaser, camera, container);
+            RenderState state;
+            if (IsCharacter(self) && states.TryGetValue(leaser, out state))
+                state.Attach(leaser, camera, container);
+        }
+
+        private void DrawSprites(On.PlayerGraphics.orig_DrawSprites orig,
+            PlayerGraphics self, RoomCamera.SpriteLeaser leaser,
+            RoomCamera camera, float timeStacker, Vector2 cameraPosition)
+        {
+            RenderState state;
+            bool hasState = states.TryGetValue(leaser, out state);
+            // Restore vanilla values before its draw pass, so opacity never
+            // compounds and the preceding white tint cannot feed back into it.
+            if (hasState) state.RestoreAppearance(leaser);
+            orig(self, leaser, camera, timeStacker, cameraPosition);
+            if (!hasState) return;
+            Player player = self.owner as Player;
+
+            if (!IsCharacter(self) || leaser.deleteMeNextFrame || self.culled ||
+                player.room == null || player.room != camera.room ||
+                player.slatedForDeletetion || player.inShortcut)
+            {
+                state.HideEffects(leaser);
+                return;
             }
+
+            state.Draw(self, player, leaser, timeStacker, cameraPosition);
         }
     }
 }

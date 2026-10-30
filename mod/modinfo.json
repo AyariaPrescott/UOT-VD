@@ -1,9 +1,10 @@
 {
-	"id": "AyariaPrescott.UOT",
-	"name": "Slugcat Template",
-	"version": "0.1.0",
-	"authors": "AyariaPrescott",
-	"description": "A template for making SlugBase mods.",
-	"requirements": [ "slime-cubed.slugbase" ],
-	"requirements_names": [ "SlugBase" ]
+  "id": "ayaria.universevoyager",
+  "name": "寰宇观游//虚拟神明",
+  "version": "0.2.0",
+  "authors": "AyariaPrescott",
+  "description": "白色半透明的神经元猫，头顶漂浮彩色渐变的不朽神经元，身体偶尔出现故障色块。",
+  "requirements": ["slime-cubed.slugbase"],
+  "requirements_names": ["SlugBase"],
+  "tags": ["Custom Slugcat"]
 }

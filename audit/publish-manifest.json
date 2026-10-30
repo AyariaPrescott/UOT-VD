@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "release": "0.2.0",
+  "prepared_utc": "2026-10-30T12:50:54.7459233+00:00",
+  "prepared_asia_singapore": "2026-10-30T20:50:54.7459233+08:00",
+  "user_request_id": "4b8b7ec41bf34caab6d8390cb74e15ab",
+  "author": "codex",
+  "executor": "/root/publish_020",
+  "repository": "https://github.com/AyariaPrescott/UOT-VD",
+  "branch": "main",
+  "previous_commit": "44085c277e55b3842142a1bf26a65f6719250308",
+  "previous_tree": "4877cac9c686c078006d80549dbbbb44c40210ea",
+  "unchanged_dev": "0ee2a036b73f1719f928d040247ac07c7e7f9d93",
+  "previous_file_count": 1369,
+  "previous_total_bytes": 176317799.0,
+  "local_backup_sha256": "151aca4b24a69d1b5127df6265de48341fcf688662d03dee8af7e1002fb3fc0a",
+  "source_transactions": [
+    "7718031c8406447a96b76918dd89a93e",
+    "11c4e40fd6e64ba491b1cb1d8d0a128f",
+    "575b9de3f9274448b2f3e88af4803ff3"
+  ],
+  "publication_transaction": "26a7ea8cbf7c49ce99a87e86b694ede4",
+  "manifest_self_hash": "Excluded to avoid a cycle; final Git tree and commit cover this manifest.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "length": 205,
+      "sha256": "f053d3b6473a09ed9663288552b8b1429618fe12d4a21a637261909b8017ad66",
+      "git_blob_sha1": "15aaebdc2cdddec07a00f9f6787eba02618e9b27",
+      "source_snapshot_sha256": null
+    },
+    {
+      "path": "AUDIT.md",
+      "mode": "100644",
+      "length": 3446,
+      "sha256": "3912f9bfe0c339df86a70de080753eaf35ada337f78bd65fb08163410ca14efc",
+      "git_blob_sha1": "d8e549d020704bb141f993754e6bfc6e81e958cf",
+      "source_snapshot_sha256": null
+    },
+    {
+      "path": "build.ps1",
+      "mode": "100644",
+      "length": 4287,
+      "sha256": "575c9ca6b6b11e680389c6eaa48148374a19fefdf78075e4947598176ca8f7e4",
+      "git_blob_sha1": "6b71ee04862a8116295a8748bd0681fabfba79a1",
+      "source_snapshot_sha256": "575c9ca6b6b11e680389c6eaa48148374a19fefdf78075e4947598176ca8f7e4"
+    },
+    {
+      "path": "dist/UniverseVoyager-0.2.0.zip",
+      "mode": "100644",
+      "length": 8728,
+      "sha256": "37bff655f8276dd4da67e2e53ff6ac16390d4c53d02a787045b21f47f17208c5",
+      "git_blob_sha1": "9788dea15b2f993b59662b25aa24e3df6c5c5cdb",
+      "source_snapshot_sha256": "37bff655f8276dd4da67e2e53ff6ac16390d4c53d02a787045b21f47f17208c5"
+    },
+    {
+      "path": "mod/modinfo.json",
+      "mode": "100644",
+      "length": 374,
+      "sha256": "e8335ef47d21388424593d8224bac3f82cea4af5cbcb8bd11fcc4c82c2feba59",
+      "git_blob_sha1": "502cb281804fa14f1ce7b8c480f78ea54e75669a",
+      "source_snapshot_sha256": "e8335ef47d21388424593d8224bac3f82cea4af5cbcb8bd11fcc4c82c2feba59"
+    },
+    {
+      "path": "mod/newest/plugins/UniverseVoyager.dll",
+      "mode": "100644",
+      "length": 14848,
+      "sha256": "3fdd4bb2ef490465ea3e99c7ecbfeab2ee5f1c51687a49b4b8f6a53a2d35ba74",
+      "git_blob_sha1": "b6e1675000ba8a59f9766a6e483776a2911b3647",
+      "source_snapshot_sha256": "3fdd4bb2ef490465ea3e99c7ecbfeab2ee5f1c51687a49b4b8f6a53a2d35ba74"
+    },
+    {
+      "path": "mod/slugbase/universe_voyager.json",
+      "mode": "100644",
+      "length": 169,
+      "sha256": "bdaf82590432344b0be7b8687e9a5b38a9f20cbeeac36da7845dcf481ba4a950",
+      "git_blob_sha1": "454b8bf0c951b51c99e98da97875b1f7f40b5080",
+      "source_snapshot_sha256": "bdaf82590432344b0be7b8687e9a5b38a9f20cbeeac36da7845dcf481ba4a950"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "length": 4793,
+      "sha256": "fb86ef44e26802a8699286a099722cb621e5a26c2b9cdf3b216c3ed875759820",
+      "git_blob_sha1": "6f9d03b85cb2f71e38ba5aaff2fb36ec25933469",
+      "source_snapshot_sha256": "fb12a2bde207636c2916be95ba404703984360926f3cab96f607feadf6d67bff"
+    },
+    {
+      "path": "src/ImmortalNeuron.cs",
+      "mode": "100644",
+      "length": 4043,
+      "sha256": "46ef4e8faea680ede48070f8726d604c701c9eefaae377e8e8d3f535848b94a6",
+      "git_blob_sha1": "53e821b9e54a29108106191cf1f4691c9a81092f",
+      "source_snapshot_sha256": "46ef4e8faea680ede48070f8726d604c701c9eefaae377e8e8d3f535848b94a6"
+    },
+    {
+      "path": "src/NeuronMotion.cs",
+      "mode": "100644",
+      "length": 4605,
+      "sha256": "aa92f017d55ae7fdc08dae848b2cc822a84626c7babde64ecd0cf09872957614",
+      "git_blob_sha1": "0e630ffe15c4f7bda7a2f21d9b9f31c4f77829cc",
+      "source_snapshot_sha256": "aa92f017d55ae7fdc08dae848b2cc822a84626c7babde64ecd0cf09872957614"
+    },
+    {
+      "path": "src/Plugin.cs",
+      "mode": "100644",
+      "length": 4825,
+      "sha256": "2680a330664789a86f42c880c95f903145c67d790bdf516f9eb3cf81345a77f7",
+      "git_blob_sha1": "a1397173b99d05bbb2ba03eef34fa78af3a2f8a8",
+      "source_snapshot_sha256": "2680a330664789a86f42c880c95f903145c67d790bdf516f9eb3cf81345a77f7"
+    },
+    {
+      "path": "src/RenderState.cs",
+      "mode": "100644",
+      "length": 7952,
+      "sha256": "0929fa42f1b0ebb725bc789f8d64d15e344fe8b054ff379a7d6d60b4319d796b",
+      "git_blob_sha1": "1d00bb11f2eb4d06b52e46395db195857683c42b",
+      "source_snapshot_sha256": "0929fa42f1b0ebb725bc789f8d64d15e344fe8b054ff379a7d6d60b4319d796b"
+    },
+    {
+      "path": "src/VisualMath.cs",
+      "mode": "100644",
+      "length": 2323,
+      "sha256": "895c687939f5b151352ed68a6a716f0f043e3bdb18665818bc867c4de4481db6",
+      "git_blob_sha1": "6e439d6441f25c0129b0eebb5d6b71d06d681399",
+      "source_snapshot_sha256": "895c687939f5b151352ed68a6a716f0f043e3bdb18665818bc867c4de4481db6"
+    },
+    {
+      "path": "tests/VisualMathTests.cs",
+      "mode": "100644",
+      "length": 5486,
+      "sha256": "f0dfbed4b5c637d5a9d45d930a84114f5dca66b5254e99fabc88db62ea19f144",
+      "git_blob_sha1": "664440ecd9a2475c3e657619f8fe7636d5a57acf",
+      "source_snapshot_sha256": "f0dfbed4b5c637d5a9d45d930a84114f5dca66b5254e99fabc88db62ea19f144"
+    },
+    {
+      "path": "tools/Verify-Mod.ps1",
+      "mode": "100644",
+      "length": 4712,
+      "sha256": "5afab599055b89861559e71a50833334405139278d9552cec24f43fe1abf7e96",
+      "git_blob_sha1": "16235a8df8fa7c4b4f1526ea8b8d29dcb35381c1",
+      "source_snapshot_sha256": "5afab599055b89861559e71a50833334405139278d9552cec24f43fe1abf7e96"
+    }
+  ]
+}

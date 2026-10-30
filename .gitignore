@@ -1,0 +1,12 @@
+# Local-only backups, audit evidence, preparation copies and editor state
+/.publish-*/
+/.publication-local/
+/.local-backup/
+/.codex/
+/.vs/
+/artifacts/
+**/bin/
+**/obj/
+/tools/review-prompt.txt
+*.user
+*.suo
